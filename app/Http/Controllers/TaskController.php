@@ -11,7 +11,7 @@ class TaskController extends Controller
     // Affichage le contenu de la base
     public function index(){
         //Task::factory()->count(15)->create();
-        $tasks = Task::all()->paginate(2);
+        $tasks = Task::all();       //->paginate(2)
         //var_dump($tasks);
         return view('home', compact('tasks'));
     }
@@ -28,7 +28,7 @@ class TaskController extends Controller
         ]);
         $task = new Task();
         $task->title = $request->title;
-        $task->status = 'n';
+        $task->status = false;
         $task->save();
 
         // dd()
@@ -47,7 +47,7 @@ class TaskController extends Controller
         // Recherche de la tâche en fonction de son $id
         $task = Task::find($id);
         // Affectation de la modification
-        $task->status = true;
+        $task->status = $task->status ? false : true;
         // Mise à jour de la tâche
         $task->save();
         //dd('update ici', $id, $Task->status);
